@@ -1,0 +1,128 @@
+{% extends 'master-layout.html'%}
+
+{% block content %}
+{% load static %}
+  
+<!-- page title -->
+<section class="section bg-cover overlay" data-background="images/backgrounds/page-title.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-white mb-3">Latest News 2</h2>
+        <!-- breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent p-0">
+            <li class="breadcrumb-item font-weight-semebold"><a class="text-white" href="index-2.html">Home</a></li>
+            <li class="breadcrumb-item font-weight-semebold active text-primary" aria-current="page">Latest News 2</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /page title -->
+
+<!-- blog -->
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 order-2 order-lg-1">
+        <div class="row">
+          <!-- blog post -->
+          {% for post in posts %}
+          <div class="col-sm-6 mb-4">
+            <article class="card border-0 rounded-0 position-relative box-shadow zindex-1">
+              <div class="card-type">Article</div>
+              <img class="card-img-top rounded-top-0 clip-half-cycle" src="{{post.image.url}}" alt="blog-thumb">
+              <div class="card-body">
+                <div class="title-border-left">
+                  <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">{{post.author.username}}</strong>  on <strong class="text-dark">{{post.published}}</strong></div>
+                  <h4 class="card-title"><a href="blog-single.html" class="text-dark">{{post.title}}</a></h4>
+                </div>
+                <p class="card-text">{{post.content|safe|truncatechars:100}}</p>
+                <a href="{% url 'single_post' id=post.id slug=post.slug %}" class="btn btn-secondary btn-arrow">read more</a>
+              </div>
+            </article>
+          </div>
+       	  {% endfor %}
+        </div>
+      </div>
+      <!-- sidebar -->
+      <aside class="col-lg-4 order-1 order-lg-2">
+        <!-- search -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <div class="position-relative">
+            <form action="#">
+              <h4>Search</h4>
+              <input type="search" class="form-control rounded-0 border-top-0 border-left-0 border-right-0 border-color pl-0 focus-shadow-none"
+                id="postSearch" name="postSearch" placeholder="Search here">
+              <button type="submit" value="send" class="post-search"><i class="fa fa-search text-color"></i></button>
+            </form>
+          </div>
+        </div>
+        <!-- latest post -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">Latest Article</h4>
+          <!-- post-item -->
+          <div class="media border-bottom border-color pb-3 mb-3">
+            <img class="mr-3" src="images/blog/recent-post-1.jpg" alt="post-thumb">
+            <div class="media-body">
+              <h5 class="mt-0"><a href="blog-single.html" class="text-dark">aiusmod tempor labore did dolory</a></h5>
+              Aug 02, 2018
+            </div>
+          </div>
+          <!-- post-item -->
+          <div class="media border-bottom border-color pb-3 mb-3">
+            <img class="mr-3" src="images/blog/recent-post-2.jpg" alt="post-thumb">
+            <div class="media-body">
+              <h5 class="mt-0"><a href="blog-single.html" class="text-dark">aiusmod tempor labore did dolory</a></h5>
+              Aug 02, 2018
+            </div>
+          </div>
+          <!-- post-item -->
+          <div class="media">
+            <img class="mr-3" src="images/blog/recent-post-3.jpg" alt="post-thumb">
+            <div class="media-body">
+              <h5 class="mt-0"><a href="blog-single.html" class="text-dark">aiusmod tempor labore did dolory</a></h5>
+              Aug 02, 2018
+            </div>
+          </div>
+        </div>
+        <!-- categories -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">Category</h4>
+          <ul class="list-styled style-circle">
+            <li class="border-bottom border-color"><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">Investment
+                Planning</a></li>
+            <li class="border-bottom border-color"><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">Valuable
+                Idea</a></li>
+            <li class="border-bottom border-color"><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">Market
+                Strategy</a></li>
+            <li class="border-bottom border-color"><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">development
+                Maping</a></li>
+            <li class="border-bottom border-color"><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">Afiliated
+                Marketing</a></li>
+            <li><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">Targated Marketing</a></li>
+          </ul>
+        </div>
+        <!-- tags -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">TAGS</h4>
+          <ul class="list-inline tag-list">
+            <li class="list-inline-item"><a class="hover-ripple" href="#">Business</a></li>
+            <li class="list-inline-item"><a class="hover-ripple" href="#">Market Analysis</a></li>
+            <li class="list-inline-item"><a class="hover-ripple" href="#">Consultancy</a></li>
+            <li class="list-inline-item"><a class="hover-ripple" href="#">Marketing</a></li>
+            <li class="list-inline-item"><a class="hover-ripple" href="#">Finance</a></li>
+          </ul>
+        </div>
+      </aside>
+      <!-- /sidebar -->
+    </div>
+  </div>
+</section>
+<!-- /blog -->
+
+
+
+{% endblock %}

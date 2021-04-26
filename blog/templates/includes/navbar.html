@@ -1,0 +1,240 @@
+{% load static %}
+<!-- navigation -->
+  <div class="navigation bg-white position-relative">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand" href="{% url 'home' %}"><img class="img-fluid pb-lg-3" src="{% static 'images/logo.png' %}" alt="Bexar"></a>
+        <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation"
+          aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse text-center" id="navigation">
+          <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'home' %}">
+                Home
+              </a>
+            </li>
+            {% if request.user.is_superuser%}
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'add' %}">
+                Add Banner
+              </a>
+            </li>
+            {%endif%}
+              <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Post
+              </a>
+              
+              <div class="dropdown-menu">
+                
+                <a class="dropdown-item" href="{% url 'post_publish' %}">Post Publish </a>
+               
+                 
+              </div>
+             
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Profile
+              </a>
+              <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'profile'%}">Profile View</a>
+              <a class="dropdown-item" href="{% url 'profile-edit'%}">Profile Edit</a>
+              </div>
+            </li>
+            {%else%}
+            
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'home' %}">
+                Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                About Us
+              </a>
+             
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="service.html">Services</a>
+            </li>
+
+            
+            {%endif%}
+          </ul>
+          <!-- search -->
+          <div class="search px-4">
+            <button id="searchOpen" class="search-btn"><i class="fa fa-search text-dark"></i></button>
+            <div class="search-wrapper">
+              <form action="#">
+                <input class="search-box form-control" id="search" type="search" placeholder="Type & Hit Enter...">
+              </form>
+              <button id="searchClose" class="search-close"><i class="fa fa-close text-dark"></i></button>
+            </div>
+          </div>
+          <!-- get start btn -->
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'user_logout'%}" class="btn btn-primary hover-ripple">Logout</a>
+          {% else %}
+            <a href="#" class="btn btn-primary hover-ripple" href="#" data-toggle="modal" data-target="#modalLRForm">Login</a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </div>
+  <!-- /navigation -->
+</header>
+<!-- /header -->
+
+
+<!--Modal: Login / Register Form-->
+<div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog cascading-modal" role="document">
+    <!--Content-->
+    <div class="modal-content">
+
+      <!--Modal cascading tabs-->
+      <div class="modal-c-tabs">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab">
+              Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">
+              Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel9" role="tab">
+              Forgot Password</a>
+          </li>
+        </ul>
+
+        <!-- Tab panels -->
+        <div class="tab-content">
+          <!--Panel 7-->
+          <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+
+            <!--Body-->
+            <form id="loginForm" method="POST">
+              {% csrf_token %}
+            <div class="modal-body mb-1">
+              <div class="md-form form-sm mb-3">
+                <input type="text" id="modalLRInput10" class="form-control form-control-sm validate" placeholder="Enter email" name="uname">
+              </div>
+
+              <div class="md-form form-sm mb-3">
+                <input type="password" id="modalLRInput11" class="form-control form-control-sm validate" placeholder="Enter password" name="password">
+              </div>
+              <div class="text-center mt-2">
+                <button type="submit" class="btn btn-info">Log in </button>
+              </div>
+            </div>
+          </form>
+            <!--Footer-->
+            <div class="modal-footer">
+              <div class="options text-center text-md-right mt-1">
+                <p id="msg"></p>
+                <div class="loader">
+                  <p>Please wait...</p>
+                </div>
+                
+              </div>
+              <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+          <!--/.Panel 7-->
+
+          <!--Panel 8-->
+          <div class="tab-pane fade" id="panel8" role="tabpanel">
+            <form id="regForm" method="POST">
+              {% csrf_token %}
+            <!--Body-->
+            <div class="modal-body">
+              <div class="md-form form-sm mb-3">
+              
+                <input type="text" id="modalLRInput12" class="form-control form-control-sm validate" placeholder="Enter username" name="uname">
+               
+              </div>
+              <div class="md-form form-sm mb-3">
+              
+                <input type="email" id="modalLRInput13" class="form-control form-control-sm validate" placeholder="Enter email" name="email">
+               
+              </div>
+
+              <div class="md-form form-sm mb-3">
+               
+                <input type="password" id="modalLRInput14" class="form-control form-control-sm validate" placeholder="Enter password" name="password">
+                
+              </div>
+
+              <div class="md-form form-sm mb-3">
+                
+                <input type="password" id="modalLRInput15" class="form-control form-control-sm validate" placeholder="Enter Repeat password" name="re_password">
+                
+              </div>
+
+              <div class="text-center form-sm mt-2">
+                <button type="submit" class="btn btn-info" id="submit-btn">Sign up</button>
+              </div>
+
+
+            </div>
+            </form>
+            <!--Footer-->
+            <div class="modal-footer">
+              <div class="options text-right">
+                <div id="msg_reg"></div>
+                <div class="loader">
+                  <p>Please wait...</p>
+                </div>
+                
+              </div>
+             
+            </div>
+          </div>
+          <!--/.Panel 8-->
+
+           <!--Panel 9-->
+          <div class="tab-pane fade" id="panel9" role="tabpanel">
+
+            <!--Body-->
+            <form id="forgetForm" method="POST">
+              {% csrf_token %}
+            <div class="modal-body mb-1">
+              <div class="md-form form-sm mb-3">
+                <input type="text" id="modalLRInput16" class="form-control form-control-sm validate" placeholder="Enter email" name="uname">
+              </div>
+              <div class="text-center mt-2">
+                <button type="submit" class="btn btn-info">Reset </button>
+              </div>
+            </div>
+          </form>
+            <!--Footer-->
+            <div class="modal-footer">
+            
+            </div>
+
+          </div>
+          <!--/.Panel 9-->
+        </div>
+
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

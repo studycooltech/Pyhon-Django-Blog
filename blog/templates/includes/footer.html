@@ -1,0 +1,95 @@
+{% load static %}
+<!-- footer -->
+<footer>
+  <!-- main footer -->
+  <div class="section bg-secondary">
+    <div class="container">
+      <div class="row justify-content-between">
+        <!-- footer content -->
+        <div class="col-lg-5 mb-5 mb-lg-0">
+          <!-- logo -->
+          <a class="mb-4 d-inline-block" href="index-2.html"><img class="img-fluid" src="{% static 'images/logo-alt.png'%}" alt="Bexar"></a>
+          <p class="text-light">Lorem ipsum dolor amet consectetur adipisicing elit sed eiusm tempor incididunt ut
+            labore dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamaboris nisi ut aliquip.exea
+            commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+          <p class="text-light mb-5">Deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus
+            error sit voluptatem.</p>
+          <h4 class="text-white mb-4">Follow Us On</h4>
+          <!-- social links -->
+          <ul class="list-inline social-icon-alt">
+            <li class="list-inline-item">
+              <a class="hover-ripple" href="#"><i class="fa fa-facebook"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a class="hover-ripple" href="#"><i class="fa fa-twitter"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a class="hover-ripple" href="#"><i class="fa fa-linkedin"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a class="hover-ripple" href="#"><i class="fa fa-pinterest"></i></a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <!-- service list -->
+            <div class="col-6 mb-5">
+              <h4 class="text-white mb-4">Services</h4>
+              <ul class="list-styled">
+                <li class="mb-3 text-light"><a class="text-light d-block" href="about.html">Company History</a></li>
+                <li class="mb-3 text-light"><a class="text-light d-block" href="about.html">About Us</a></li>
+                <li class="mb-3 text-light"><a class="text-light d-block" href="contact.html">Contact Us</a></li>
+                <li class="mb-3 text-light"><a class="text-light d-block" href="service.html">Services</a></li>
+                <li class="mb-3 text-light"><a class="text-light d-block" href="privacy-policy.html">Privacy Policy</a></li>
+              </ul>
+            </div>
+            <!-- contact info -->
+            <div class="col-6 mb-5">
+              <h4 class="text-white mb-4">Contact Info</h4>
+              <ul class="list-unstyled">
+                <li class="text-light mb-3">9567 Turner Trace Apt. 466 North Willie, BC C3G8A4</li>
+                <li class="text-light mb-3">+21 123 456 5523 </li>
+                <li class="text-light mb-3">info@bexar.com</li>
+              </ul>
+            </div>
+            <!-- newsletter -->
+            <div class="col-12">
+              <h4 class="text-white mb-4">Subscribe Newsletter</h4>
+              <h6 class="text-white mb-2" id="subsmsg"></h6>
+              <form action="/subscribe/" method="POST" id="subsForm">
+                {% csrf_token %}
+                <div class="position-relative">
+                  <input type="email" class="form-control border-0 text-white newsletter-form" id="newsletter" name="email"
+                    placeholder="Enter your email">
+                  <button type="submit" class="btn btn-primary btn-subscribe">Subscribe</button>
+                </div>
+              </form>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- copyright -->
+  <div class="bg-secondary-darken py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+          <p class="mb-0 text-white"><span class="text-primary">Bloging</span> &copy; <script>
+              var CurrentYear = new Date().getFullYear()
+              document.write(CurrentYear)
+            </script> All Right Reserved</p>
+        </div>
+        <div class="col-md-6 text-center text-md-right">
+          <ul class="list-inline">
+            <li class="list-inline-item mx-0"><a class="d-inline-block px-3 text-white border-right" href="terms-conditions.html">Terms of Service</a></li>
+            <li class="list-inline-item mx-0"><a class="d-inline-block px-3 text-white" href="privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- /footer -->

@@ -1,0 +1,66 @@
+{% extends 'master-layout.html'%}
+{%block title %}Post Create{%endblock%}
+{% block content %}
+{% load static %}
+
+
+
+<!-- blog details -->
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- post thumb -->
+        <div class="position-relative mb-5">
+
+            <div class="post gradient pt-5  text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <!-- postDetails -->
+                    <div class="postDetails bg-white">
+                        <h3 class="display-6 text-center pt-3">Add New Banner</h3><hr>
+
+                        <form method='POST' action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+
+                         <div class="form-group m-3">
+                            <label>Title</label>
+                            <input required name="title" type="text" placeholder="Enter a title"
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label>Description</label>
+                            <input required name="description" type="text" placeholder="Enter a description"
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label>Upload image</label>
+                            <input required name="images" type="file" multiple class="form-control-file">
+                        </div>
+
+                        <button type='submit' class="btn btn-primary m-3">Submit</button>
+
+                    </form>
+
+                        
+                        <hr>
+                    </div>
+                    <!-- postDetails -->
+                </div>
+              
+            </div>
+        </div>
+    </div>
+         
+        </div>
+   
+   
+    </div>
+  </div>
+</section>
+<!-- /blog details -->
+{% endblock %}

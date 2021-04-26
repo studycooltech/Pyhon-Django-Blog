@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="eng">
+
+
+<!-- Mirrored from demo.themefisher.com/bexer/blog-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 12:02:01 GMT -->
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Bloging Website{% endblock %}</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+   <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{% static 'plugins/bootstrap/bootstrap.min.css' %}">
+
+  <!-- slick slider -->
+  <link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome/font-awesome.min.css' %}">
+  <!-- animation css -->
+  <link rel="stylesheet" href="{% static 'plugins/animate/animate.css' %}">
+  <!-- aos -->
+  <link rel="stylesheet" href="{% static 'plugins/aos/aos.css' %}">
+  <!-- venobox popup -->
+  <link rel="stylesheet" href="{% static 'plugins/venobox/venobox.css' %}">
+  <!-- chart js -->
+  <script src="{% static 'plugins/chart/Chart.bundle.js' %}"></script>
+
+  <!-- Main Stylesheet -->
+  <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/owl.theme.default.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+  <style type="text/css">
+      .loader{
+        display: none;
+      }
+    </style>
+
+</head>
+
+<body>
+  <!-- preloader start -->
+  <div class="preloader">
+    <div class="spin"></div>
+  </div>
+  <!-- preloader end -->
+
+{% include 'includes/topbar.html' %}
+{% include 'includes/navbar.html' %}
+{% include 'includes/banner.html' %}
+{% block content %}
+
+{% endblock %}
+{% include 'includes/footer.html' %}
+
+
+{% block javascript %}
+  <!-- jQuery -->
+<script src="{% static 'plugins/jQuery/jquery.min.js' %}"></script>
+<!-- Bootstrap JS -->
+<script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
+<!-- slick slider -->
+<script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+<!-- aos -->
+<script src="{% static 'plugins/aos/aos.js' %}"></script>
+<!-- venobox popup -->
+<script src="{% static 'plugins/venobox/venobox.min.js' %}"></script>
+<!-- Modernizer -->
+<script src="{% static 'plugins/modernizer/modernizr.min.js' %}"></script>
+<!-- filter -->
+<script src="{% static 'plugins/filterizr/jquery.filterizr.min.js' %}"></script>
+<!-- google map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+<script src="{% static 'plugins/google-map/gmap.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+
+
+<!-- Main Script -->
+<script src="{% static 'js/owl.carousel.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+ <script>
+        $(document).ready(function () {
+            // catch the form's submit event
+            $('#regForm').submit(function () {
+                // create an AJAX call
+                $.ajax({
+                    data: $(this).serialize(), // get the form data
+                    type: $(this).attr('method'), // GET or POST
+                    url: "{% url 'user_reg' %}",
+                    beforeSend:function(){
+                      $('.loader').show();
+                    },
+                    // on success
+                    success: function (response) {
+                      if(response.error=='0'){
+                        $('.loader').hide();
+                        $('#msg_reg').css("color", "green").html(response.msg).fadeOut(3000);
+                        $('#regForm')[0].reset();
+                        
+                      }
+                      if(response.error=='1'){
+                        $('.loader').hide();
+                        $('#msg_reg').css("color", "red").html(response.msg).fadeOut(3000);
+                        $('#regForm')[0].reset();
+                       
+                      }
+                    },
+                    // on error
+                    error: function (response) {
+                      if(response.error=='1'){
+                        //alert(response.msg);
+                      }
+                      else{
+                        //alert(response.msg);
+                      }
+                      
+                        
+                    }
+                });
+                return false;
+            });
+
+            $('#loginForm').submit(function () {
+                // create an AJAX call
+                $.ajax({
+                    data: $(this).serialize(), // get the form data
+                    type: $(this).attr('method'), // GET or POST
+                    url: "{% url 'user_login' %}",
+                    beforeSend:function(){
+                      $('.loader').show();
+                    },
+                    // on success
+                    success: function (response) {
+                      if(response.error=='0'){
+                        window.location.href = '{% url 'home' %}';
+                        $('.loader').hide();
+                        $('#msg').css("color", "green").html(response.msg).fadeOut(3000);
+                        $('#loginForm')[0].reset();
+                      }
+                      if(response.error=='1'){
+                        $('.loader').hide();
+                        $('#msg').css("color", "red").html(response.msg).fadeOut(3000);
+                        $('#loginForm')[0].reset();
+                      }
+                    },
+                    // on error
+                    error: function (response) {
+                      if(response.error=='1'){
+                        //alert(response.msg);
+                      }
+                      else{
+                        //alert(response.msg);
+                      }
+                      
+                        
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+
+    <script>
+      $( document ).ready( function () {
+          
+        $("#loginForm").validate( {
+            rules: {
+               uname: {
+                  required: true,
+                  
+                                 },
+               password:{
+                  required:true,
+                  
+               }     
+            },
+            
+            
+             messages:{
+                  uname:{
+                      required:'Please enter a valid email id or user id.',
+                      
+                  },
+                  
+                  
+                  password:{
+                      required:'Please enter password.',
+                  }
+              },
+            
+         } );
+    });
+</script>
+<script>
+  
+  $(document).ready(function() {    
+    $('#like-button').click(function (e) {
+      
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '{% url "like" %}',
+        data: {
+          postid: $('#like-button').val(),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+          action: 'post'
+        },
+        success: function (json) {
+          document.getElementById("like_count").innerHTML = json['result']
+        },
+        error: function (xhr, errmsg, err) {
+
+        }
+      });
+
+     });
+  })
+</script>
+<script>
+     $(document).ready(function () {
+      $('#subsForm').submit(function () {
+      // create an AJAX call
+      $.ajax({
+          data: $(this).serialize(), // get the form data
+          type: $(this).attr('method'), // GET or POST
+          url: "/subscribe/",
+          success: function (response) {
+          if(response.error=='0'){
+            $('#subsmsg').css("color", "green").html(response.msg).fadeOut(3000);
+            $('#subsForm')[0].reset();
+          }
+          if(response.error=='1'){
+            $('#subsmsg').css("color", "red").html(response.msg).fadeOut(3000);
+            $('#subsForm')[0].reset();
+          }
+        },
+      });
+      return false;
+    });
+  })
+
+  </script>
+
+
+<script type="text/javascript">
+$('.owl-carousel').owlCarousel({
+    items:1,
+    loop:true,
+    margin:10,
+    nav:true,
+    autoplay:true,
+    autoplayTimeout:5000,
+    autoplayHoverPause:true
+})
+
+</script>  
+{% endblock javascript %}
+</body>
+
+<!-- Mirrored from demo.themefisher.com/bexer/blog-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 12:02:02 GMT -->
+</html>

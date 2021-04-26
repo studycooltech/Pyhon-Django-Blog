@@ -1,0 +1,108 @@
+{% extends 'master-layout.html'%}
+
+{% block content %}
+{% load static %}
+{% load humanize %} 
+
+
+<!-- blog -->
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 order-2 order-lg-1">
+        <div class="row">
+          <!-- blog post -->
+          {% for post in posts %}
+          <div class="col-sm-6 mb-4">
+            <article class="card border-0 rounded-0 position-relative box-shadow zindex-1">
+              <div class="card-type">Article</div>
+              <img class="card-img-top rounded-top-0 clip-half-cycle" src="{{post.image.url}}" alt="blog-thumb">
+              <div class="card-body">
+                <div class="title-border-left">
+                  <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">{{post.user}}</strong>  on <strong class="text-dark">{{post.published}}</strong></div>
+                  <h4 class="card-title"><a href="{% url 'single_post' id=post.id slug=post.slug %}" class="text-dark">{{post.title}}</a></h4>
+                </div>
+                <p class="card-text">{{post.content|safe|truncatechars:100}}</p>
+                <div class="mt-2">
+                 {% if request.user.is_authenticated and post.like_count %}
+                <span class="" id="like_count"><h5>Like</h5> {{post.like_count}}</span>
+                <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="like-button" value="{{post.id}}">
+                  <li class="list-inline-item"><a class="text-danger" href="#"><i class="fa fa-heart"></i>
+                </button>
+                {% else %}
+                <span class="" id="like_count"><h5>Like </h5>{{post.like_count}}</span>
+                <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="like-button" value="{{post.id}}">
+                  <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-heart"></i>
+                </button>
+
+                {%endif%}
+                <h6>Views (({{post.post_views|intcomma}}))</h6>
+                <div>
+                <a href="{% url 'single_post' id=post.id slug=post.slug %}" class="btn btn-secondary btn-arrow">read more</a>
+              </div>
+            </article>
+          </div>
+       	  {% endfor %}
+        </div>
+      </div>
+      <!-- sidebar -->
+      <aside class="col-lg-4 order-1 order-lg-2">
+        <!-- search -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <div class="position-relative">
+            <form action="{% url 'search'%}">
+              <h4>Search</h4>
+              <input type="search" class="form-control rounded-0 border-top-0 border-left-0 border-right-0 border-color pl-0 focus-shadow-none"
+                id="postSearch" name="postSearch" placeholder="Search here">
+              <button type="submit" value="send" class="post-search"><i class="fa fa-search text-color"></i></button>
+            </form>
+          </div>
+        </div>
+        <!-- latest post -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">Latest Article</h4>
+          <!-- post-item -->
+
+          {% for ltps in latest_post %}
+          <div class="media border-bottom border-color pb-3 mb-3">
+            <img class="mr-3 img-fluid" src="{{ltps.image.url}}" alt="post-thumb" style="width: 100px; height: 100px;">
+            <div class="media-body">
+              <h5 class="mt-0"><a href="{% url 'single_post' id=ltps.id slug=ltps.slug %}" class="text-dark">{{ltps.title}}</a></h5>
+              {{ltps.published}}
+            </div>
+          </div>
+          {% endfor %}
+        
+        </div>
+        <!-- categories -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">Category</h4>
+
+          {% for cat in category %}
+          <ul class="list-styled style-circle">
+            <li class="border-bottom border-color"><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">{{cat.category_name}}</a></li>
+            
+          </ul>
+          {% endfor %}
+        </div>
+        <!-- tags -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">TAGS</h4>
+          <ul class="list-inline tag-list">
+
+            {%for tag in tags%}
+            <li class="list-inline-item"><a class="hover-ripple" href="#">{{tag.tag}}</a></li>
+            {%endfor%}
+          </ul>
+        </div>
+      </aside>
+      <!-- /sidebar -->
+    </div>
+  </div>
+</section>
+<!-- /blog -->
+
+
+
+
+{% endblock %}

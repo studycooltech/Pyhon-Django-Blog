@@ -1,0 +1,222 @@
+{% extends 'master-layout.html'%}
+{%block title %}Single Post {%endblock%}
+{% block content %}
+{% load static %}
+{% load humanize %}
+<style type="text/css">
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
+
+</style>
+
+
+<!-- blog details -->
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- post thumb -->
+        <div class="position-relative mb-5">
+          <img src="{{posts.image.url}}" alt="post thumb" class="img-fluid w-100">
+          <div class="card-type hover-ripple">Article</div>
+        </div>
+        <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">{{posts.user}}</strong>/ on <strong class="text-dark">{{posts.published}}</strong></div>
+        <h4>{{posts.title}}</h4>
+        <p>{{posts.content}}</p>
+       
+        <!-- tags -->
+        <div class="mb-3">
+          <h5 class="d-inline-block mr-3">Tags:</h5>
+          <ul class="list-inline d-inline-block">
+            {%for tag in tags%}
+            <li class="list-inline-item"><a class="text-color" href="#">{{tag.tag}}</a>,</li>
+            {%endfor%}
+          </ul>
+        </div>
+        <!-- share -->
+        <div class="mb-3">
+          <h5 class="d-inline-block mr-3">Share:</h5>
+          <ul class="list-inline d-inline-block">
+            <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-facebook"></i></a></li>
+            <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-google"></i></a></li>
+          </ul>
+          <div class="mr-3">
+            <h5 class="d-inline-block mr-3">Total views:</h5>
+             <ul class="list-inline d-inline-block">
+            <li class="list-inline-item"><a class="text-color" href="#">{{posts.post_views|intcomma}}</a></li>
+          </ul>
+           
+        </div>
+        </div>
+
+        <div class="mb-2">
+          
+          <h5 class="d-inline-block">Like:</h5>
+
+          <ul class="list-inline d-inline-block">
+          {% if request.user.is_authenticated and posts.like_count%}
+          <span class="" id="like_count">{{posts.like_count}}</span>
+          <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="like-button" value="{{posts.id}}">
+            <li class="list-inline-item"><a class="text-danger" href="#"><i class="fa fa-heart"></i>
+          </button>
+          {% else %}
+          <span class="" id="like_count">{{posts.like_count}}</span>
+          <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="like-button" value="{{posts.id}}">
+            <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-heart"></i>
+          </button>
+
+           {%endif%}
+          
+          </ul>
+          
+        </div>
+         {% if user.is_authenticated %}
+         <a class="btn btn-sm hover-ripple" href="{% url 'update' id=posts.id%}">Post Update </a>
+         {% endif %}
+         {% if request.user.is_superuser%}
+         <a class="btn btn-sm hover-ripple mt-3" href="{% url 'delete' id=posts.id%}">Post Delete</a>
+         {% endif %}
+        <!-- comments -->
+        <h5 class="mt-4">Comments {{total_cmt}}</h5>
+
+        
+         {% if user.is_authenticated %}
+        <div class="media mb-4 pb-4 border-bottom border-color">
+         
+          {% for cm in comments %}
+          <img class="d-flex mr-3" src="{{ posts.user.profile_image.url }}" alt="client-img" style="width: 70px;height: 70px;">
+          <div class="media-body">
+            <h5 class="mt-0">{{cm.0.user.username}}</h5>
+            <p>{{cm.0.time}}</p>
+            <p class="text-dark">{{cm.0.comm}}</p>
+            <p id="{{cm.0.id}}"><button onclick="ReplyForm('{{cm.0.id}}')" class="btn btn-sm btn-gray hover-ripple mb-3">reply</button></p>
+
+            <div class="media mt-3 border-top border-color pt-4">
+              {% for subc in cm.1 %}
+              <a class="d-flex pr-3" href="#!">
+                <img src="{{ subc.sub_com_profile.profile_image.url }}" alt="client-img" style="width: 70px;height: 70px;">
+              </a>
+              <div class="media-body">
+                <h5 class="mt-0">{{subc.user.username}}</h5>
+                <p>{{subc.time}}</p>
+                <p class="text-dark">{{subc.comm}}</p>
+                
+              </div>
+              {%endfor%}
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+        <!-- END comment-list -->
+        <script type="text/javascript">
+          function ReplyForm(id) {
+            let elm = `  <form  class="row" method="Post">
+                        {% csrf_token %}
+                        <div class="col-12">
+                          <input type='text' value='${id}' name = 'comm_id' style="display:none;" readonly/>
+                          <textarea name="msg_body" id="message" class="form-control border-0 rounded-0 box-shadow mb-5 py-3 px-4"
+                            placeholder="Your Message"></textarea>
+                        </div>
+                        <div class="col-12">
+                          <button type="submit" value="send" class="btn btn-primary hover-ripple">send message</button>
+                        </div>
+                      </form>`;
+                  document.getElementById(id).innerHTML = elm;
+          }
+        </script>
+
+        <!-- comment box -->
+        <h5 class="mb-4">Leave a Comment</h5>
+        <form class="row" method="Post">
+          {% csrf_token %}
+          <div class="col-12">
+            <textarea name="msg_body" id="message" class="form-control border-0 rounded-0 box-shadow mb-5 py-3 px-4"
+              placeholder="Your Message"></textarea>
+          </div>
+          <div class="col-12">
+            <button type="submit" value="send" class="btn btn-primary hover-ripple">send message</button>
+          </div>
+        </form>
+        {% else %}
+          <p class="text-danger"><b> You are not commented this post please login first our website</b> </p>
+        {% endif %}
+      </div>
+      <!-- sidebar -->
+      <aside class="col-lg-4">
+        <!-- search -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <div class="position-relative">
+            <form action="#">
+              <h4>Search</h4>
+              <input type="search" class="form-control rounded-0 border-top-0 border-left-0 border-right-0 border-color pl-0 focus-shadow-none"
+                id="postSearch" name="postSearch" placeholder="Search here">
+              <button type="submit" value="send" class="post-search"><i class="fa fa-search text-color"></i></button>
+            </form>
+          </div>
+        </div>
+        <!-- latest post -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">Latest Article</h4>
+          <!-- post-item -->
+          {% for ltps in latest_post %}
+          <div class="media border-bottom border-color pb-3 mb-3">
+            <img class="mr-3 img-fluid" src="{{ltps.image.url}}" alt="post-thumb" style="width: 100px; height: 100px;">
+            <div class="media-body">
+              <h5 class="mt-0"><a href="{% url 'single_post' id=ltps.id slug=ltps.slug %}" class="text-dark">{{ltps.title}}</a></h5>
+              {{ltps.published}}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- categories -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">Category</h4>
+         {% for cat in category %}
+          <ul class="list-styled style-circle">
+            <li class="border-bottom border-color"><a href="#" class="text-color d-block pb-3 mt-3 text-decoration-none">{{cat.category_name}}</a></li>
+            
+          </ul>
+          {% endfor %}
+        </div>
+        <!-- tags -->
+        <div class="bg-white px-4 py-5 box-shadow mb-5">
+          <h4 class="mb-4">TAGS</h4>
+          <ul class="list-inline tag-list">
+             {%for tag in tags%}
+            <li class="list-inline-item"><a class="hover-ripple" href="#">{{tag.tag}}</a></li>
+            {%endfor%}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<!-- /blog details -->
+
+<script>
+  $(document).ready(function() {    
+    $('#like-button').click(function (e) {
+      
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '{% url "like" %}',
+        data: {
+          postid: $('#like-button').val(),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+          action: 'post'
+        },
+        success: function (json) {
+          document.getElementById("like_count").innerHTML = json['result']
+        },
+        error: function (xhr, errmsg, err) {
+
+        }
+      });
+
+     });
+  })
+  </script>
+{% endblock %}

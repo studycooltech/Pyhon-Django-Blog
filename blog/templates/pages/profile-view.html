@@ -1,0 +1,48 @@
+{% extends 'master-layout.html'%}
+
+{% block content %}
+{% load static %}
+
+
+<!-- team member -->
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="section-title">We Are Dynamic Team and<br>Business Agency</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 mb-5">
+        <div class="team-member text-center">
+          <div class="team-member-img position-relative mb-5">
+            {% if profile.profile_image %}
+            <img class="img-fluid w-100" src="{{ profile.profile_image.url }}" alt="team-member">
+             {% endif %}
+            <div class="hover-icon py-4">
+              <ul class="list-inline social-icon">
+                <li class="list-inline-item">
+                  <a href="#" class="hover-ripple ripple-white"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#" class="hover-ripple ripple-white"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#" class="hover-ripple ripple-white"><i class="fa fa-linkedin"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#" class="hover-ripple ripple-white"><i class="fa fa-pinterest"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <h4><a href="team-single.html" class="text-dark">{{profile.profile_name}}</a></h4>
+          <span>{{profile.email}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /team member -->
+{% endblock %}
+

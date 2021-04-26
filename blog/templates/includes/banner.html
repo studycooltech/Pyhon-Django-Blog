@@ -1,0 +1,29 @@
+<!-- page title -->
+<section class="section bg-cover overlay" data-background="images/backgrounds/page-title.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent p-0">
+            
+            <div class="owl-carousel owl-theme">
+               {% for sl in slides%}
+              <div class="item">
+                <img src="{{sl.slide.url}}" alt="img" class="hero-image" />
+                <div class="info">
+                  <h3>{{sl.title}}</h3>
+                  <span>{{sl.description}}</span>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- /page title -->

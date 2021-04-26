@@ -1,0 +1,33 @@
+{% load static %}
+<!-- header -->
+<header>
+  <!-- top header -->
+  <div class="top-header bg-secondary pt-2 pb-1">
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- social icons -->
+        <div class="col-lg-6 col-md-6 text-center text-md-left">
+          <span class="text-white">Connect With Us:</span>
+          <ul class="list-inline d-inline-block">
+            <li class="list-inline-item"><a class="text-white d-inline-block p-2" href="#"><i class="fa fa-facebook"></i></a></li>
+            <li class="list-inline-item"><a class="text-white d-inline-block p-2" href="#"><i class="fa fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a class="text-white d-inline-block p-2" href="#"><i class="fa fa-google"></i></a></li>
+          </ul>
+        </div>
+        <!-- mail and phone -->
+        <div class="col-lg-6 col-md-6 text-md-right text-center">
+          <ul class="list-inline">
+            {% if request.user.is_authenticated %}
+            <li class="list-inline-item mx-0 border-right border-secondary"><a class="text-white d-inline-block px-lg-3 px-2" href="mailto:info@bexar.com">Loged By</a></li>
+            <li class="list-inline-item mx-0"><a class="text-white d-inline-block px-lg-3 px-2" href="callto:1234565523">{{request.user}}</a></li>
+            {% else %}
+            <li class="list-inline-item mx-0 border-right border-secondary"><a class="text-white d-inline-block px-lg-3 px-2" href="mailto:info@bexar.com">Contact</a></li>
+            <li class="list-inline-item mx-0"><a class="text-white d-inline-block px-lg-3 px-2" href="callto:1234565523">Call Us Now: <span class="text-primary">(+91)-8109910465</span></a></li>
+
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /top header -->
